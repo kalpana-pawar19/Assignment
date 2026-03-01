@@ -1,0 +1,17 @@
+
+SQL QUERY:
+
+SELECT 
+    c.customer_id AS Customer,
+    c.age AS Age,
+    oi.item AS Item,
+    SUM(COALESCE(oi.quantity, 0)) AS Quantity
+FROM customers c
+ INNER JOIN orders o ON c.customer_id = o.customer_id
+INNER JOIN order_items oi ON o.order_id = oi.order_id
+WHERE c.age BETWEEN 18 AND 35
+GROUP BY c.customer_id, c.age, oi.item
+HAVING SUM(COALESCE(oi.quantity, 0)) > 0
+ORDER BY c.customer_id;
+
+
